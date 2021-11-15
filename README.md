@@ -131,6 +131,10 @@ Abrimos una terminal y procedemos a realizar los siguientes comandos.
 
 ![](FOTOS/5.png)
 
+```
+unzip nextcloud-22.2.2.zip
+```
+
 ## Otra manera de descomprimir el archivo .zip
 Si de la primera manera no nos ha salido bien podemos descomprimir el archivo .zip realizando los siguientes comandos.
 
