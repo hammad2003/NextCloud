@@ -1,28 +1,48 @@
 # NextCloud
 
-# Instal·lació de Vagrant
-```console
-lxc launch ubuntu:20.04 elmeucontenidor
+# Instalación de Vagrantfile
+
+Para instalar el Vagrantfile procedemos a crear una carpeta con el nombre que queramos y entramos en ella, esto lo hacemos con los siguientes comandos.
+
+```
+mkdir ubuntu-focal
+cd ubuntu-focal/
 ```
 
-## Engegar el contenidor (si està aturat)
-```console
-lxc start elmeucontenidor
+## Craer el Vagrantfile
+Para crear nuestro Vagrantfile procedemos a realizar el siguiente comando poniendo al lado el nombre y la versión del SO que queremos.
+
+```
+vagrant init ubuntu/focal64
 ```
 
-## Executar el contenidor
-```console
-lxc exec elmeucontenidor bash
+## Ejecutar Maquina Virtual con Vagrantfile
+Una vez ya encendido, vamos a ejecutar el siguiente comando para que siempre a la hora de ejecutarse se ejecute con el programa di virtualización que utilizamos en este caso VirtualBox, y las de mas vezes solo tendremos que poner `Vagrant up`.
+
+```
+vagrant up --provider=virtualbox (Solo la primera vez)
+vagrant up
 ```
 
-## Exportar i importar un contenidor
-Com exportar i importar un contenidor
+## Apagar Maquina Virtual con Vagrantfile
+Para apagar la maquina virtual de Vagrantfile utilizaremos el siguiente comando.
 
-https://serverfault.com/questions/759170/copy-lxd-containers-between-hosts
+```
+vagrant halt
+```
 
-## Instal·lar apache2, mysql i algunes llibreries al contenidor
+## SSH a la Maquina Virtual con Vagrantfile
+Para conectarnos mediante ssh a la máquina virtual no nos hace falta todo el rollo de poner ssh usuaio@192.168.10.100, sino que es más fácil sola mente tendremos que poner el siguiente comando.
 
-```console
+```
+vagrant ssh
+```
+
+## Instalar apache2, mysql y algunas librerías en el contenedor
+
+Cuando ya hayamos entrado dentro mediante ssh vamos a proceder a actualizar el listado de paquetes y a descargar y instalar el `apache2`, `mysql` y algunas `librerías` para que todo funcione correctamente.
+
+```
  apt update
  apt upgrade
  apt install apache2
@@ -31,119 +51,106 @@ https://serverfault.com/questions/759170/copy-lxd-containers-between-hosts
  apt install php-fpm php-common php-mbstring php-xmlrpc php-soap php-gd php-xml php-intl php-mysql php-cli php-ldap php-zip php-curl
 ```
 
-## Configurem apache2
+## Configuramos apache2
 
-Activem el mòdul `proxy_fcgi`:
-```console
+Activamos el módulo `proxy_fcgi`:
+
+```
 a2enmod proxy_fcgi
 ```
 
-Activem la configuració de `php-fpm`:
-```console
+Activamos la configuración de `php-fpm`:
+
+```
 a2enconf php-fpm
 ```
-Reiniciem el servidor:
-```console
+
+Reiniciamos el servidor:
+
+```
 systemctl restart apache2
 ```
 
-## Creem una base de dades i un usuari al MySQL
+## Creamos una base de datos y un usuario en MySQL
 
- https://elpuig.xeill.net/Members/vcarceler/articulos/mysql-en-un-contedor-lxd/index_html
 
- https://elpuig.xeill.net/Members/vcarceler/articulos/instalacion-basica-de-wordpress-en-ubuntu-20.04/index_html
+Accedemos a `MySQL` con el usuario `root`
 
-Accedim al `MySQL` amb l'usuari `root`
-```console
+```
 mysql -u root
 ```
 
-Creem la base de dades amb el nom que volgueu, en el meu cas `lamevabasededades`
-```console
-CREATE DATABASE lamevabasededades;
+Creamos la base de datos con el nombre que desee, en mi caso `mibasededades`
+
+```
+CREATE DATABASE mibasededades;
 ```
 
-Creem un usuari anomenat `elmeuusuari`, li posem el password `elmeupassword` i li donem privilegis sobre la nostra base de dades `lamevabasededades`
+Creamos un usuario llamado `miusuario`, le ponemos el password `mipassword` y le damos privilegios sobre nuestra base de datos `mibasededades`
 
-```console
-CREATE USER 'elmeuusuari'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
 ```
-```console
-GRANT ALL ON lamevabasededades.* to 'elmeuusuari'@'localhost';
+CREATE USER 'miusuario'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
 ```
-```console
+
+```
+GRANT ALL DONDE mibasededades.* to 'miusuario'@'localhost';
+```
+
+```
 exit
 ```
 
-Comprovem que tot ha funcionat bé
-```console
-mysql -u elmeuusuari -p
+Comprobamos que todo ha funcionado bien
+
+```
+mysql -u mi usuario -p
 ```
 
-Un cop ja tenim la base de dades i el nou usuari que utilitzarem ja podem continuar la nostra instal·lació. Primer sincronitzem la carpeta on estarà la web al contenidor `/var/www/html` amb una carpeta a la màquina host, per comoditat.
+## Descomprimir el archivo .zip
+Para poder descomprimir nuestro archivo .zip realizaremos los siguientes pasos.
 
-## Crea un parell de claus al host
+#### Paso 1
 
-```console
-ssh-keygen -f ~/.ssh/elmeucontenidor -N ""
+Descargamos el archivo .zip desde la página de NextCloud dándole clic al botón de `Get NextCloud` a la opción `Server Packages`.
+
+![](FOTOS/1.png)
+
+![](FOTOS/2.png)
+
+#### Paso 2
+
+Al descargarnos el archivo .zip nos saldrá esta ventana le daremos a `Guardar archivo` y le daremos a aceptar.
+
+![](FOTOS/3.png)
+
+#### Paso 3
+
+Abrimos una terminal y procedemos a realizar los siguientes comandos.
+
+![](FOTOS/4.png)
+
+![](FOTOS/5.png)
+
+## Otra manera de descomprimir el archivo .zip
+Si de la primera manera no nos ha salido bien podemos descomprimir el archivo .zip realizando los siguientes comandos.
+
+```
+apt update
+
+apt install unzip
+
+cd /var/www/html
+
+wget https://download.nextcloud.com/server/releases/nextcloud-22.2.2.zip
+
+unzip nextcloud-22.2.2.zip
 ```
 
-## Mostra la clau-pública generada al host
-```console
- cat ~/.ssh/elmeucontenidor.pub
+## Accedemos al instalador de la aplicación mediante el navegador web
+Primero averiguamos nuestra IP y después esta la ponemos en nuestro navegador.
+
 ```
+ip -c a
 
-## Selecciona la clau pública i copía-la al contenidor
-
-Enganxa-la al fitxer `/root/.ssh/authorized_keys` del contenidor el contingut de la clau pública.
-
-```console
-vim /root/.ssh/authorized_keys
-```
-
-## Crea una carpeta anomenada `elmeucontenidor` al host
-```console
-mkdir ~/elmeucontenidor
-```
-
-## Esbrina l'adreça IP del contenidor
-
-```console
-ip a
-```
-
-També pots veure la IP del contenidor fent `lxc list`
-
-## Sincronitza la carpeta `elmeucontenidor` del host amb la carpeta `/var/www/html` del contenidor
-
-Substitueix la IP de la comanda per la IP que tingui el teu contenidor:
-
-```console
-sshfs root@10.161.122.237:/var/www/html ~/elmeucontenidor
-```
-
-Dins de la carpeta `elmeucontenidor` hauria d'apareixer l'`index.html` que ha creat `apache2` en la instal·lació.
-
-## Copiem l'aplicació web que volem instal·lar a la nostra carpeta `elmeucontenidor` del host i actualitzem els permisos
-
-Baixem l'arxiu comprimit de l'aplicació que hem baixat d'Internet:
-
-```console
-cp ~/Baixades/aplicacio.zip ~/elmeucontenidor
-cd ~/elmeucontenidor
-unzip aplicacio.zip
-```
-
-Un cop copiat i descomprimit l'arxiu canviem els permisos de tota la carpeta `/var/www/html`
-
-```console
-chown -R www-data:www-data /var/www/html
-chmod -R 775 /var/www/html
-```
-
-## Accedim a l'instal·lador de l'aplicació mitjançant el navegador web
-Poseu la IP del vostre contenidor al navegador web i comproveu el seu funcionament:
-
-```console
-http://10.161.122.237
+http://10.161.122.237 (en el navegador)
 ```
