@@ -132,7 +132,7 @@ Abrimos una terminal y procedemos a realizar los siguientes comandos.
 ![](FOTOS/5.png)
 
 ```
-unzip nextcloud-22.2.2.zip
+unzip nextcloud-22.2.0.zip
 ```
 
 ## Otra manera de descomprimir el archivo .zip
@@ -150,11 +150,9 @@ wget https://download.nextcloud.com/server/releases/nextcloud-22.2.2.zip
 unzip nextcloud-22.2.2.zip
 ```
 
-## Accedemos al instalador de la aplicación mediante el navegador web
-Primero averiguamos nuestra IP y después esta la ponemos en nuestro navegador.
+## Accedemos a la Instalación de la aplicación mediante el navegador web
+Para acceder a nuestro NextCloud pones lo siguiente en nuestro navegador.
 
 ```
-ip -c a
-
-http://10.161.122.237 (en el navegador)
+http://localhost:8080
 ```
