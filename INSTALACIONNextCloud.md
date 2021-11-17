@@ -129,6 +129,12 @@ Abrimos una terminal y procedemos a realizar los siguientes comandos.
 
 ![](FOTOS/4.png)
 
+```
+cd /var/www/html
+
+cp ~/clouds/nextcloud-22.2.0.zip .
+```
+
 ![](FOTOS/5.png)
 
 ```
