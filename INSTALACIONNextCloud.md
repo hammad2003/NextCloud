@@ -150,6 +150,15 @@ wget https://download.nextcloud.com/server/releases/nextcloud-22.2.2.zip
 unzip nextcloud-22.2.2.zip
 ```
 
+## Aplicación de permisos en nuestra aplicación web
+Una vez ya descomprimidos el archivo .zip en el directorio `/var/www/html`, aplicamos los siguientes permisos.
+
+```
+cd /var/www/html
+chmod -R 775 .
+chown -R root:www-data .
+```
+
 ## Accedemos a la Instalación de la aplicación mediante el navegador web
 Para acceder a nuestro NextCloud pones lo siguiente en nuestro navegador.
 
