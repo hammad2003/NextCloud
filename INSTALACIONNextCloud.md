@@ -80,20 +80,20 @@ Accedemos a `MySQL` con el usuario `root`
 mysql -u root
 ```
 
-Creamos la base de datos con el nombre que desee, en mi caso `mibasededades`
+Creamos la base de datos con el nombre que desee, en mi caso `bbdd`
 
 ```
-CREATE DATABASE mibasededades;
+CREATE DATABASE bbdd;
 ```
 
-Creamos un usuario llamado `miusuario`, le ponemos el password `mipassword` y le damos privilegios sobre nuestra base de datos `mibasededades`
+Creamos un usuario llamado `usuario`, le ponemos el password `password` y le damos privilegios sobre nuestra base de datos `bbdd`
 
 ```
-CREATE USER 'miusuario'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+CREATE USER 'usuario'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
 ```
 
 ```
-GRANT ALL DONDE mibasededades.* to 'miusuario'@'localhost';
+GRANT ALL ON bbdd.* to 'usuario'@'localhost';
 ```
 
 ```
@@ -103,7 +103,7 @@ exit
 Comprobamos que todo ha funcionado bien
 
 ```
-mysql -u mi usuario -p
+mysql -u usuario -p
 ```
 
 ## Descomprimir el archivo .zip
